@@ -1,0 +1,413 @@
+
+
+
+
+
+//View
+var view = document;
+
+var operand1_flag=true;
+var operator_flag=false;
+var operand2_flag=false;
+var sqrt_flag=false;
+var operand1=[];
+var operand2=[];
+var operand_for_sqrt =[];
+var operator;
+var result;
+var count=1;
+var string_before_sqrt;
+//Modal
+var model = { opr1:undefined , opr2:undefined, rst:undefined, flag:0,arra:["0","1","2","3","4","5","6","7","8","9","+","-","x","/","√","=",".","⇦","Clear Data"],
+    numbers:[1,2,3,4,5,6,7,8,9,0],operators:["+","-","x","/","√","=",".","⇦","Clear Data"],
+
+    putToSpan: function (x) {
+
+
+        if(x=="√"){
+            string_before_sqrt =view.getElementById("show").innerText;
+            view.getElementById("show").innerText+=x;
+            sqrt_flag=true;}
+        else if(sqrt_flag==true && (!isNaN((x))||x==".")){
+            count++;
+            operand_for_sqrt.push(x);
+            view.getElementById("show").innerText+=x;
+
+
+        }
+        else if(sqrt_flag==true && (isNaN((x))&&x!=".")){
+
+            var n_s=operand_for_sqrt.join("");
+            var n=parseFloat(n_s);
+
+            n=Math.sqrt(n);
+
+
+            while(count>0) {
+                count--;
+                operand_for_sqrt.pop();
+            }
+
+            sqrt_flag=false;
+
+            var n1_s=operand1.join("");
+            var n1=parseFloat(n1_s);
+            switch (operator) {
+                case "+":result=n1+n;break;
+                case "-":result=n1-n;break;
+                case "x":result=n1*n;break;
+                case "/":result=n1/n;break;
+
+            }
+            view.getElementById("show").innerText=result;
+            operand2_flag=false;
+            operand1_flag=true;
+            var arr=result.toString().split("");
+            operand1=arr;
+
+        }
+        else if(operand1_flag==true&&(!isNaN((x))||x==".")){
+
+            operand1.push(x);
+            view.getElementById("show").innerText+=x;
+
+        }
+        else if(operand1_flag==true&&(x=="+"||x=="-"||x=="x"||x=="/")){
+            operand1_flag=false;
+            operand2_flag=true;
+            operator=x;
+            view.getElementById("show").innerText+=x;
+        }
+        else if(operand2_flag==true&&(!isNaN((x))||x==".")){
+            operand2.push((x));
+            view.getElementById("show").innerText+=x;
+
+
+        }
+        else if(operand2_flag==true&&x=="="){
+
+
+
+            var n1_s=operand1.join("");
+            var n2_s=operand2.join("");
+
+            var n1=parseFloat(n1_s);
+            var n2=parseFloat(n2_s);
+            switch (operator) {
+                case "+":result=n1+n2;break;
+                case "-":result=n1-n2;break;
+                case "x":result=n1*n2;break;
+                case "/":result=n1/n2;break;
+
+            }
+
+
+            view.getElementById("show").innerText=result;
+
+            operand2_flag=false;
+            operand1_flag=true;
+
+            this.clear();
+
+
+
+            var arry=result.toString().split("");
+
+            operand1=arry;
+
+        }
+        else if(x=="Clear Data"){
+            view.getElementById("show").innerText="";
+            operand2_flag=false;
+            operand1_flag=true;
+            this.clear();
+
+        }
+        else if(x=="⇦"){
+
+        }
+
+
+
+
+
+
+
+    }, clear:function () {
+
+        while(operand1.length > 0) {
+            operand1.pop();
+        }
+        while(operand2.length > 0) {
+            operand2.pop();
+        }
+
+    }
+
+
+};
+
+
+
+//Controller
+var controller = { view:view, model:model,
+    listen:function(){
+
+
+        var arra=["0","1","2","3","4","5","6","7","8","9","+","-","x","/","√","=",".","Clear Data"];
+
+
+        document.getElementById(arra[0]).addEventListener('click', function(){model.putToSpan(arra[0])});
+        document.getElementById(arra[1]).addEventListener('click', function(){model.putToSpan(arra[1])});
+        document.getElementById(arra[2]).addEventListener('click', function(){model.putToSpan(arra[2])});
+        document.getElementById(arra[3]).addEventListener('click', function(){model.putToSpan(arra[3])});
+        document.getElementById(arra[4]).addEventListener('click', function(){model.putToSpan(arra[4])});
+        document.getElementById(arra[5]).addEventListener('click', function(){model.putToSpan(arra[5])});
+        document.getElementById(arra[6]).addEventListener('click', function(){model.putToSpan(arra[6])});
+        document.getElementById(arra[7]).addEventListener('click', function(){model.putToSpan(arra[7])});
+        document.getElementById(arra[8]).addEventListener('click', function(){model.putToSpan(arra[8])});
+        document.getElementById(arra[9]).addEventListener('click', function(){model.putToSpan(arra[9])});
+        document.getElementById(arra[10]).addEventListener('click', function(){model.putToSpan(arra[10])});
+        document.getElementById(arra[11]).addEventListener('click', function(){model.putToSpan(arra[11])});
+        document.getElementById(arra[12]).addEventListener('click', function(){model.putToSpan(arra[12])});
+        document.getElementById(arra[13]).addEventListener('click', function(){model.putToSpan(arra[13])});
+        document.getElementById(arra[14]).addEventListener('click', function(){model.putToSpan(arra[14])});
+        document.getElementById(arra[15]).addEventListener('click', function(){model.putToSpan(arra[15])});
+        document.getElementById(arra[16]).addEventListener('click', function(){model.putToSpan(arra[16])});
+        document.getElementById(arra[17]).addEventListener('click', function(){model.putToSpan(arra[17])});
+
+
+
+
+
+
+
+
+    }
+
+
+
+}
+controller.listen();
+
+*********************** the second code://not MVC
+
+//View
+var view = document;
+
+
+//Modal
+var model = { controller:controller,opr1:undefined , opr2:undefined, rst:undefined, flag:0,arra:["0","1","2","3","4","5","6","7","8","9","+","-","x","/","√","=",".","⇦","Clear Data"],
+    numbers:[1,2,3,4,5,6,7,8,9,0],operators:["+","-","x","/","√","=",".","⇦","Clear Data"], text:"",operand1_flag:true,
+    operator_flag:false,
+    operand2_flag:false,
+    sqrt_flag:false,
+    sqrt_flag1:false,
+    operand1:[],
+    operand2:[],
+    operand_for_sqrt :[],
+    operator:"",
+    result:"",
+    count:1,
+    string_before_sqrt:"",
+
+
+
+    process: function (x) {
+
+
+        if(x=="√"&&this.sqrt_flag1==false){
+
+            // this. string_before_sqrt =view.getElementById("show").innerText;
+            this.text+=String(x);
+            this. string_before_sqrt = this.text;
+            controller.putToSpan(this.text);                     //   view.getElementById("show").innerText+=x;
+            this.sqrt_flag=true;
+        }
+        else if(this.sqrt_flag==true && (!isNaN((x))||x==".")){
+            this.text+=String(x);
+            this.count++;
+            this.operand_for_sqrt.push(x);
+            controller.putToSpan(this.text);
+            // view.getElementById("show").innerText+=x;
+            //view.getElementById("show").innerText+=x;
+
+
+        }
+        else if(this.sqrt_flag==true && (isNaN((x))&&x!="."&&x!="Clear Data")){
+            this.text+=String(x);
+            this.operator=String(x);
+            var n_s=this.operand_for_sqrt.join("");
+            var n=parseFloat(n_s);
+
+            n=Math.sqrt(n);
+
+
+            while(this.count>0) {
+                this. count--;
+                this.   operand_for_sqrt.pop();
+            }
+
+            this.sqrt_flag=false;
+
+
+
+            var n1_s=this.operand1.join("");
+            var n1=parseFloat(n1_s);
+            switch (this.operator) {
+                case "+":this.result=n1+n;break;
+                case "-":this.result=n1-n;break;
+                case "x":this.result=n1*n;break;
+                case "/":this.result=n1/n;break;
+                case "=":this.result=n;break;
+
+
+            }
+            this.text=String(this.result);
+            controller.putToSpan(this.text);
+            // view.getElementById("show").innerText=this.result;
+            this.operand2_flag=false;
+            this. operand1_flag=true;
+            var arr=this.result.toString().split("");
+            this. operand1=arr;
+
+        }
+        else if(this.operand1_flag==true&&(!isNaN((x))||x==".")){
+            this.text+=String(x);
+            this. operand1.push(x);
+            controller.putToSpan(this.text);
+            this.operand1_flag==false;
+            // view.getElementById("show").innerText+=x;
+
+        }
+        else if(this.operand1_flag==true&&(x=="+"||x=="-"||x=="x"||x=="/")){
+            this.text+=String(x);
+            this.operand1_flag=false;
+            this. operand2_flag=true;
+            this. operator=x;
+            controller.putToSpan(this.text);
+            //  view.getElementById("show").innerText+=x;
+        }
+        else if(this.operand2_flag==true&&(!isNaN((x))||x==".")){
+            this.text+=String(x);
+            this.operand2.push((x));
+            controller.putToSpan(this.text);
+            this.operand2_flag==false;
+            // view.getElementById("show").innerText+=x;
+
+
+        }
+        else if(this.operand2_flag==true&&x=="="){
+
+            this.text+=String(x);
+
+            var n1_s=this.operand1.join("");
+            var n2_s=this.operand2.join("");
+
+            var n1=parseFloat(n1_s);
+            var n2=parseFloat(n2_s);
+            switch (this.operator) {
+                case "+":this.result=n1+n2;break;
+                case "-":this.result=n1-n2;break;
+                case "x":this.result=n1*n2;break;
+                case "/":this.result=n1/n2;break;
+
+            }
+
+
+            //    view.getElementById("show").innerText=this.result;
+            this.text=String(this.result);
+            controller.putToSpan(this.text);
+
+            this. operand2_flag=false;
+            this. operand1_flag=true;
+
+            this.clearData();
+
+
+
+            var arry=this.result.toString().split("");
+
+            this. operand1=arry;
+
+        }
+        else if(x=="Clear Data"){
+
+            this.clear();
+
+            // view.getElementById("show").innerText="";
+            this.  operand2_flag=false;
+            this.  operand1_flag=true;
+
+
+        }
+        else if(x=="⇦"){
+
+        }
+
+
+
+
+
+
+
+    }, clearData:function () {
+
+        while(this.operand1.length > 0) {
+            this.  operand1.pop();
+        }
+        while(this.operand2.length > 0) {
+            this.  operand2.pop();
+        }
+
+    }, clear:function(){
+        this.clearData();
+        this.text="";
+        controller.putToSpan(this.text);
+    }
+
+
+};
+
+
+
+//Controller
+var controller = { view:view, model:model,
+    listen:function(){
+
+
+        var arra=["0","1","2","3","4","5","6","7","8","9","+","-","x","/","√","=",".","Clear Data"];
+
+
+        document.getElementById(arra[0]).addEventListener('click', function(){model.process(arra[0])});
+        document.getElementById(arra[1]).addEventListener('click', function(){model.process(arra[1])});
+        document.getElementById(arra[2]).addEventListener('click', function(){model.process(arra[2])});
+        document.getElementById(arra[3]).addEventListener('click', function(){model.process(arra[3])});
+        document.getElementById(arra[4]).addEventListener('click', function(){model.process(arra[4])});
+        document.getElementById(arra[5]).addEventListener('click', function(){model.process(arra[5])});
+        document.getElementById(arra[6]).addEventListener('click', function(){model.process(arra[6])});
+        document.getElementById(arra[7]).addEventListener('click', function(){model.process(arra[7])});
+        document.getElementById(arra[8]).addEventListener('click', function(){model.process(arra[8])});
+        document.getElementById(arra[9]).addEventListener('click', function(){model.process(arra[9])});
+        document.getElementById(arra[10]).addEventListener('click', function(){model.process(arra[10])});
+        document.getElementById(arra[11]).addEventListener('click', function(){model.process(arra[11])});
+        document.getElementById(arra[12]).addEventListener('click', function(){model.process(arra[12])});
+        document.getElementById(arra[13]).addEventListener('click', function(){model.process(arra[13])});
+        document.getElementById(arra[14]).addEventListener('click', function(){model.process(arra[14])});
+        document.getElementById(arra[15]).addEventListener('click', function(){model.process(arra[15])});
+        document.getElementById(arra[16]).addEventListener('click', function(){model.process(arra[16])});
+        document.getElementById(arra[17]).addEventListener('click', function(){model.process(arra[17])});
+
+
+
+    },
+
+    putToSpan:function (x) {
+        view.getElementById("show").innerText=x;
+
+    }
+
+
+
+}
+controller.listen();
